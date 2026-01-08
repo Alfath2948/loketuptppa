@@ -110,7 +110,7 @@ export default function UserPage() {
       clonedElement.style.top = '0'
       document.body.appendChild(clonedElement)
 
-      // Convert oklch colors ke rgb sebelum capture
+      // Convert modern color functions (oklch, lab) ke rgb sebelum capture
       const style = window.getComputedStyle(clonedElement)
       const allElements = clonedElement.querySelectorAll('*')
       
@@ -139,24 +139,79 @@ export default function UserPage() {
         return `rgb(${r}, ${g}, ${bl})`
       }
 
+      // Fungsi untuk convert lab ke rgb (approximation)
+      const convertLabToRgb = (labValue: string): string => {
+        if (!labValue.includes('lab')) return labValue
+        
+        // Extract lab values: lab(L a b) or lab(L a b / alpha)
+        const match = labValue.match(/lab\(([^)]+)\)/)
+        if (!match) return '#000000'
+        
+        const values = match[1].split(/\s+/).map(v => parseFloat(v))
+        const [L, a, b] = values
+        
+        // Convert Lab to XYZ (D65 white point)
+        const y = (L + 16) / 116
+        const x = a / 500 + y
+        const z = y - b / 200
+        
+        const x3 = x * x * x
+        const y3 = y * y * y
+        const z3 = z * z * z
+        
+        const xn = x3 > 0.008856 ? x3 : (x - 16/116) / 7.787
+        const yn = y3 > 0.008856 ? y3 : (y - 16/116) / 7.787
+        const zn = z3 > 0.008856 ? z3 : (z - 16/116) / 7.787
+        
+        // D65 white point
+        const X = xn * 0.95047
+        const Y = yn * 1.00000
+        const Z = zn * 1.08883
+        
+        // Convert XYZ to RGB (sRGB)
+        let r = X *  3.2406 + Y * -1.5372 + Z * -0.4986
+        let g = X * -0.9689 + Y *  1.8758 + Z *  0.0415
+        let bl = X *  0.0557 + Y * -0.2040 + Z *  1.0570
+        
+        // Apply gamma correction
+        r = r > 0.0031308 ? 1.055 * Math.pow(r, 1/2.4) - 0.055 : 12.92 * r
+        g = g > 0.0031308 ? 1.055 * Math.pow(g, 1/2.4) - 0.055 : 12.92 * g
+        bl = bl > 0.0031308 ? 1.055 * Math.pow(bl, 1/2.4) - 0.055 : 12.92 * bl
+        
+        // Clamp and convert to 0-255
+        const r255 = Math.round(Math.min(255, Math.max(0, r * 255)))
+        const g255 = Math.round(Math.min(255, Math.max(0, g * 255)))
+        const b255 = Math.round(Math.min(255, Math.max(0, bl * 255)))
+        
+        return `rgb(${r255}, ${g255}, ${b255})`
+      }
+
+      // Fungsi universal untuk convert modern color functions
+      const convertModernColor = (colorValue: string): string => {
+        if (!colorValue) return colorValue
+        if (colorValue.includes('oklch')) return convertOklchToRgb(colorValue)
+        if (colorValue.includes('lab(')) return convertLabToRgb(colorValue)
+        return colorValue
+      }
+
       // Convert computed styles
       Array.from(allElements).forEach((el) => {
         const elem = el as HTMLElement
         const computed = window.getComputedStyle(elem)
         
-        // Convert color properties
+        // Convert color properties (oklch, lab, etc)
         const color = computed.color
         const bgColor = computed.backgroundColor
         const borderColor = computed.borderColor
         
-        if (color && color.includes('oklch')) {
-          elem.style.color = convertOklchToRgb(color)
+        if (color && (color.includes('oklch') || color.includes('lab('))) {
+          elem.style.color = convertModernColor(color)
         }
-        if (bgColor && bgColor.includes('oklch')) {
-          elem.style.backgroundColor = convertOklchToRgb(bgColor)
+        if (bgColor && (bgColor.includes('oklch') || bgColor.includes('lab('))) {
+          elem.style.backgroundColor = convertModernColor(bgColor)
         }
-        if (borderColor && borderColor.includes('oklch')) {
-          elem.style.borderColor = convertOklchToRgb(borderColor)
+        if (borderColor && (borderColor.includes('oklch') || borderColor.includes('lab('))) {
+          elem.style.borderColor = convertModernColor(borderColor)
         }
       })
 
@@ -167,34 +222,37 @@ export default function UserPage() {
         useCORS: true,
         logging: false,
         onclone: (clonedDoc: Document) => {
-          // Final pass: convert any remaining oklch colors to rgb
+          // Final pass: convert any remaining modern color functions (oklch, lab) to rgb
           const allElements = clonedDoc.querySelectorAll('*')
           Array.from(allElements).forEach((el) => {
             const elem = el as HTMLElement
             if (elem.style) {
-              // Get computed style and convert oklch
+              // Get computed style and convert modern color functions
               const computed = clonedDoc.defaultView?.getComputedStyle(elem)
               if (computed) {
                 const color = computed.color
                 const bgColor = computed.backgroundColor
                 const borderColor = computed.borderColor
                 
-                if (color && color.includes('oklch')) {
-                  elem.style.color = convertOklchToRgb(color)
+                if (color && (color.includes('oklch') || color.includes('lab('))) {
+                  elem.style.color = convertModernColor(color)
                 }
-                if (bgColor && bgColor.includes('oklch')) {
-                  elem.style.backgroundColor = convertOklchToRgb(bgColor)
+                if (bgColor && (bgColor.includes('oklch') || bgColor.includes('lab('))) {
+                  elem.style.backgroundColor = convertModernColor(bgColor)
                 }
-                if (borderColor && borderColor.includes('oklch')) {
-                  elem.style.borderColor = convertOklchToRgb(borderColor)
+                if (borderColor && (borderColor.includes('oklch') || borderColor.includes('lab('))) {
+                  elem.style.borderColor = convertModernColor(borderColor)
                 }
               }
               
               // Also check inline styles
               const inlineStyle = elem.getAttribute('style') || ''
-              if (inlineStyle.includes('oklch')) {
-                // Replace oklch with rgb equivalent
-                elem.style.cssText = inlineStyle.replace(/oklch\([^)]+\)/g, (match) => convertOklchToRgb(match))
+              if (inlineStyle.includes('oklch') || inlineStyle.includes('lab(')) {
+                // Replace modern color functions with rgb equivalent
+                let updatedStyle = inlineStyle
+                updatedStyle = updatedStyle.replace(/oklch\([^)]+\)/g, (match) => convertOklchToRgb(match))
+                updatedStyle = updatedStyle.replace(/lab\([^)]+\)/g, (match) => convertLabToRgb(match))
+                elem.style.cssText = updatedStyle
               }
             }
           })
