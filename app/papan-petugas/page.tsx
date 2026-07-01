@@ -2,12 +2,19 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { CalendarDays, CircleCheck, CircleMinus, ShieldCheck } from "lucide-react"
+import { CalendarDays, CircleCheck, CircleMinus } from "lucide-react"
 import { useMemo } from "react"
 import { useOfficers } from "@/hooks/use-officers"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 export default function OfficerBoardPage() {
-  const { officers, isReady } = useOfficers()
+  const { officers, isReady, setOfficerDuty } = useOfficers()
 
   const dateDisplay = useMemo(() => {
     return new Date().toLocaleDateString("id-ID", {
@@ -25,21 +32,12 @@ export default function OfficerBoardPage() {
           <Link href="/" className="text-sm font-medium text-[#1E40AF] underline-offset-4 hover:underline">
             Loket Antrian
           </Link>
-          <Link
-            href="/papan-petugas/admin"
-            className="text-sm font-medium text-[#4B5563] underline-offset-4 hover:text-[#1E40AF] hover:underline"
-          >
-            Admin Petugas
-          </Link>
         </div>
       </header>
 
       <section className="bg-[#1E40AF] text-white">
         <div className="mx-auto max-w-6xl px-4 py-10 md:py-14">
           <div className="flex max-w-4xl flex-col gap-5">
-            <div className="flex size-12 items-center justify-center rounded-md bg-white/15">
-              <ShieldCheck className="size-7" aria-hidden="true" />
-            </div>
             <div className="space-y-3">
               <h1 className="text-3xl font-bold uppercase leading-tight md:text-5xl">
                 Papan Nama Petugas Layanan
@@ -56,11 +54,11 @@ export default function OfficerBoardPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-8 md:py-10">
+      <section className="mx-auto max-w-none px-4 py-8 md:py-10">
         {!isReady ? (
           <div className="rounded-md border bg-white p-6 text-center text-[#4B5563]">Memuat data petugas...</div>
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-flow-col auto-cols-[minmax(220px,1fr)] gap-4 overflow-x-auto pb-3">
             {officers.map((officer) => (
               <article key={officer.id} className="overflow-hidden rounded-md border bg-white shadow-sm">
                 <div className="relative aspect-[4/5] bg-[#E5E7EB]">
@@ -82,20 +80,31 @@ export default function OfficerBoardPage() {
 
                   <div className="space-y-2">
                     <p className="text-xs font-bold uppercase tracking-wide text-[#6B7280]">Status</p>
-                    <div
-                      className={
-                        officer.isOnDuty
-                          ? "inline-flex items-center gap-2 rounded-md bg-[#DCFCE7] px-3 py-2 text-sm font-bold text-[#166534]"
-                          : "inline-flex items-center gap-2 rounded-md bg-[#F3F4F6] px-3 py-2 text-sm font-bold text-[#4B5563]"
-                      }
+                    <Select
+                      value={officer.isOnDuty ? "on-duty" : "ready"}
+                      onValueChange={(value) => setOfficerDuty(officer.id, value === "on-duty")}
                     >
-                      {officer.isOnDuty ? (
-                        <CircleCheck className="size-4" aria-hidden="true" />
-                      ) : (
-                        <CircleMinus className="size-4" aria-hidden="true" />
-                      )}
-                      {officer.isOnDuty ? "Sedang Berjaga" : "Tidak Berjaga"}
-                    </div>
+                      <SelectTrigger
+                        aria-label={`Ubah status ${officer.name}`}
+                        className={
+                          officer.isOnDuty
+                            ? "h-10 w-full justify-between border-[#BBF7D0] bg-[#DCFCE7] text-sm font-bold text-[#166534]"
+                            : "h-10 w-full justify-between border-[#E5E7EB] bg-[#F3F4F6] text-sm font-bold text-[#4B5563]"
+                        }
+                      >
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="on-duty">
+                          <CircleCheck className="size-4 text-[#166534]" aria-hidden="true" />
+                          Sedang Bertugas
+                        </SelectItem>
+                        <SelectItem value="ready">
+                          <CircleMinus className="size-4 text-[#4B5563]" aria-hidden="true" />
+                          Siap Melayani
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
               </article>

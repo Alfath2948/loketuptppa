@@ -55,7 +55,7 @@ export default function OfficerBoardAdminManagePage() {
           </div>
           <div>
             <h2 className="font-bold">Status Petugas Layanan</h2>
-            <p className="text-sm text-[#4B5563]">Aktifkan toggle untuk petugas yang sedang berjaga.</p>
+            <p className="text-sm text-[#4B5563]">Aktifkan toggle untuk petugas yang sedang bertugas.</p>
           </div>
         </div>
 
@@ -92,7 +92,7 @@ export default function OfficerBoardAdminManagePage() {
                         : "rounded-md bg-[#F3F4F6] px-3 py-1.5 text-sm font-bold text-[#4B5563]"
                     }
                   >
-                    {officer.isOnDuty ? "Sedang Berjaga" : "Tidak Berjaga"}
+                    {officer.isOnDuty ? "Sedang Bertugas" : "Siap Melayani"}
                   </span>
                   <Switch
                     checked={officer.isOnDuty}
