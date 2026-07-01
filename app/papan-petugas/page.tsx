@@ -88,8 +88,8 @@ export default function OfficerBoardPage() {
                         aria-label={`Ubah status ${officer.name}`}
                         className={
                           officer.isOnDuty
-                            ? "h-10 w-full justify-between border-[#BBF7D0] bg-[#DCFCE7] text-sm font-bold text-[#166534]"
-                            : "h-10 w-full justify-between border-[#E5E7EB] bg-[#F3F4F6] text-sm font-bold text-[#4B5563]"
+                            ? "h-10 w-full justify-between border-[#E5E7EB] bg-[#F3F4F6] text-sm font-bold text-[#4B5563]"
+                            : "h-10 w-full justify-between border-[#BBF7D0] bg-[#DCFCE7] text-sm font-bold text-[#166534]"
                         }
                       >
                         <SelectValue />
