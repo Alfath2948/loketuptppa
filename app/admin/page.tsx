@@ -27,6 +27,12 @@ export default function AdminPage() {
             >
               Publik
             </Link>
+            <Link
+              href="/papan-petugas"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors underline-offset-4 hover:underline"
+            >
+              Papan Petugas
+            </Link>
           </nav>
         </div>
       </header>
