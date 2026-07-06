@@ -22,7 +22,7 @@ export const DEFAULT_OFFICERS: Officer[] = [
   },
   {
     id: "ajeng-hp",
-    name: "AJENG H. P, S.Psi, M.Psi",
+    name: "AJENG Harlika, S.Psi, M.Psi",
     position: "Psikolog Klinis",
     imageSrc: "/petugas/Ajeng.png",
     isOnDuty: false,

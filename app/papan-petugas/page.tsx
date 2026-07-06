@@ -102,7 +102,7 @@ export default function OfficerBoardPage() {
 
           <div className="flex flex-1 flex-col items-center text-center">
             <h1 className="flex items-center gap-3 font-[family-name:var(--font-script)] text-3xl font-bold leading-tight text-white sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl">
-              Papan Nama Petugas Pelayanan
+              Petugas Layanan
               <Heart className="size-6 shrink-0 fill-pink-300 text-pink-300 md:size-7 lg:size-8" aria-hidden="true" />
             </h1>
             <p className="flex items-center gap-2 text-sm font-medium text-violet-100 sm:text-base md:text-base lg:text-lg xl:text-xl">
