@@ -65,7 +65,7 @@ export default function OfficerBoardPage() {
       <header className="relative z-10 overflow-hidden bg-[#6D28D9] text-white">
         <CornerBloom className="pointer-events-none absolute -right-6 -top-8 w-40 opacity-40 md:w-52" />
         <CornerBloom className="pointer-events-none absolute -bottom-10 left-[30%] w-36 -scale-y-100 opacity-25 md:w-44" />
-        <div className="mx-auto flex max-w-[1600px] items-center justify-end px-6 pt-1 md:px-10">
+        <div className="mx-auto flex w-full items-center justify-end px-3 pt-1 md:px-5">
           <Link
             href="/"
             className="text-sm font-medium text-violet-100 underline-offset-4 hover:underline"
@@ -73,7 +73,7 @@ export default function OfficerBoardPage() {
             Loket Antrian
           </Link>
         </div>
-        <div className="mx-auto flex max-w-[1600px] flex-wrap items-center justify-between gap-4 px-6 pb-5 pt-1 md:flex-nowrap md:gap-6 md:px-10">
+        <div className="mx-auto flex w-full flex-wrap items-center justify-between gap-4 px-3 pb-3 pt-1 md:flex-nowrap md:gap-6 md:px-5">
           <div className="flex items-center gap-4">
             <div className="flex shrink-0 items-center gap-2 rounded-md bg-white p-2.5">
               <Image
@@ -119,30 +119,30 @@ export default function OfficerBoardPage() {
         </div>
       </header>
 
-      <section className="relative z-10 mx-auto max-w-[1600px] px-6 py-6 md:px-10">
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          <div className="flex items-center gap-4 rounded-full bg-[#DCFCE7] py-3 pl-3 pr-6">
-            <span className="flex size-16 shrink-0 items-center justify-center rounded-full bg-[#16A34A] text-white">
-              <Smile className="size-9" aria-hidden="true" />
+      <section className="relative z-10 mx-auto w-full px-3 py-2.5 md:px-5">
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <div className="flex items-center gap-3 rounded-full bg-[#DCFCE7] py-2 pl-2 pr-5">
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-[#16A34A] text-white">
+              <Smile className="size-6" aria-hidden="true" />
             </span>
             <div className="leading-tight">
-              <p className="text-xl font-extrabold uppercase tracking-wide text-[#15803D] md:text-2xl">Siap Melayani</p>
-              <p className="text-sm font-medium text-[#166534]">Petugas siap memberikan pelayanan</p>
+              <p className="text-sm font-extrabold uppercase tracking-wide text-[#15803D] xl:text-base">Siap Melayani</p>
+              <p className="text-xs font-medium text-[#166534]">Petugas siap memberikan pelayanan</p>
             </div>
           </div>
-          <div className="flex items-center gap-4 rounded-full bg-[#FEF3C7] py-3 pl-3 pr-6">
-            <span className="flex size-16 shrink-0 items-center justify-center rounded-full bg-[#F59E0B] text-white">
-              <UserRound className="size-9" aria-hidden="true" />
+          <div className="flex items-center gap-3 rounded-full bg-[#FEF3C7] py-2 pl-2 pr-5">
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-[#F59E0B] text-white">
+              <UserRound className="size-6" aria-hidden="true" />
             </span>
             <div className="leading-tight">
-              <p className="text-xl font-extrabold uppercase tracking-wide text-[#B45309] md:text-2xl">Sedang Bertugas</p>
-              <p className="text-sm font-medium text-[#92400E]">Petugas sedang melayani penerima layanan</p>
+              <p className="text-sm font-extrabold uppercase tracking-wide text-[#B45309] xl:text-base">Sedang Bertugas</p>
+              <p className="text-xs font-medium text-[#92400E]">Petugas sedang melayani penerima layanan</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="relative z-10 mx-auto max-w-[1600px] px-6 pb-8 md:px-10">
+      <section className="relative z-10 mx-auto w-full px-3 pb-4 md:px-5">
         {!isReady ? (
           <div className="rounded-md border bg-white p-6 text-center text-[#4B5563]">Memuat data petugas...</div>
         ) : (
@@ -150,15 +150,15 @@ export default function OfficerBoardPage() {
             {officers.map((officer, index) => (
               <article
                 key={officer.id}
-                className="relative flex flex-col rounded-3xl border border-violet-100 bg-white p-3 shadow-[0_1px_3px_rgba(109,40,217,0.08)]"
+                className="relative flex flex-col rounded-3xl border-2 border-violet-100 bg-white p-2.5 shadow-[0_2px_8px_rgba(109,40,217,0.10)]"
               >
-                <span className="absolute left-3 top-3 z-10 flex size-8 items-center justify-center rounded-full bg-[#6D28D9] text-sm font-bold text-white">
+                <span className="absolute left-2.5 top-2.5 z-10 flex size-9 items-center justify-center rounded-full bg-[#6D28D9] text-base font-extrabold text-white">
                   {index + 1}
                 </span>
 
                 <div className="relative aspect-square w-full">
                   <FloralFrame className="absolute inset-0 size-full" />
-                  <div className="absolute inset-[10%] overflow-hidden rounded-full border-4 border-white bg-[#EDE9FE] ring-1 ring-violet-100">
+                  <div className="absolute inset-[6%] overflow-hidden rounded-full border-4 border-white bg-[#EDE9FE] ring-1 ring-violet-100">
                     <Image
                       src={officer.imageSrc}
                       alt={officer.name}
@@ -170,10 +170,14 @@ export default function OfficerBoardPage() {
                   </div>
                 </div>
 
-                <div className="mt-2 flex flex-1 flex-col gap-3">
-                  <div className="flex min-h-16 flex-col items-center justify-center space-y-0.5 px-0.5 text-center">
-                    <h2 className="text-[13px] font-bold uppercase leading-snug text-[#4C1D95]">{officer.name}</h2>
-                    <p className="text-[11px] font-medium leading-tight text-[#6B7280]">{officer.position}</p>
+                <div className="mt-2.5 flex flex-1 flex-col gap-2.5">
+                  <div className="flex min-h-20 flex-col items-center justify-center space-y-1 px-0.5 text-center">
+                    <h2 className="text-[15px] font-extrabold uppercase leading-snug text-[#4C1D95] xl:text-base">
+                      {officer.name}
+                    </h2>
+                    <p className="text-xs font-semibold leading-tight text-[#7C3AED] xl:text-[13px]">
+                      {officer.position}
+                    </p>
                   </div>
 
                   <Select
@@ -184,14 +188,14 @@ export default function OfficerBoardPage() {
                       aria-label={`Ubah status ${officer.name}`}
                       className={
                         officer.isOnDuty
-                          ? "h-auto min-h-8 w-full justify-center gap-1 whitespace-normal rounded-full border-none bg-[#F59E0B] px-2 py-1 text-[10px] font-bold uppercase leading-tight text-white [&>svg:last-child]:hidden [&_svg]:shrink-0 [&_svg]:text-white lg:min-h-9 lg:text-[11px]"
-                          : "h-auto min-h-8 w-full justify-center gap-1 whitespace-normal rounded-full border-none bg-[#16A34A] px-2 py-1 text-[10px] font-bold uppercase leading-tight text-white [&>svg:last-child]:hidden [&_svg]:shrink-0 [&_svg]:text-white lg:min-h-9 lg:text-[11px]"
+                          ? "h-auto min-h-11 w-full justify-center gap-1.5 whitespace-normal rounded-full border-none bg-[#F59E0B] px-2 py-2 text-xs font-extrabold uppercase leading-tight tracking-wide text-white [&>svg:last-child]:hidden [&_svg]:shrink-0 [&_svg]:text-white xl:text-[13px]"
+                          : "h-auto min-h-11 w-full justify-center gap-1.5 whitespace-normal rounded-full border-none bg-[#16A34A] px-2 py-2 text-xs font-extrabold uppercase leading-tight tracking-wide text-white [&>svg:last-child]:hidden [&_svg]:shrink-0 [&_svg]:text-white xl:text-[13px]"
                       }
                     >
                       {officer.isOnDuty ? (
-                        <UserRound className="size-3.5" aria-hidden="true" />
+                        <UserRound className="size-[18px]" aria-hidden="true" />
                       ) : (
-                        <Smile className="size-3.5" aria-hidden="true" />
+                        <Smile className="size-[18px]" aria-hidden="true" />
                       )}
                       <span className="whitespace-normal text-center">
                         {officer.isOnDuty ? "Sedang Bertugas" : "Siap Melayani"}
@@ -215,13 +219,13 @@ export default function OfficerBoardPage() {
         )}
       </section>
 
-      <section className="relative z-10 mx-auto max-w-[1600px] px-6 pb-8 md:px-10">
+      <section className="relative z-10 mx-auto w-full px-3 pb-4 md:px-5">
         <div className="relative overflow-hidden rounded-3xl border border-violet-100 bg-white shadow-[0_1px_3px_rgba(109,40,217,0.08)]">
           <CornerBloom className="pointer-events-none absolute -left-8 -top-8 w-32 opacity-50 md:w-40" />
           <CornerBloom className="pointer-events-none absolute -bottom-8 -right-8 w-32 -scale-100 opacity-50 md:w-40" />
-          <div className="relative grid items-center gap-6 p-6 md:grid-cols-3 md:gap-8 md:p-8">
+          <div className="relative grid items-center gap-5 p-5 md:grid-cols-3 md:gap-6 md:p-6">
           <div className="space-y-1.5">
-            <h3 className="font-[family-name:var(--font-script)] text-2xl font-bold text-[#6D28D9] md:text-3xl">
+            <h3 className="font-[family-name:var(--font-script)] text-3xl font-bold text-[#6D28D9]">
               Butuh Bantuan?
             </h3>
             <p className="text-sm text-[#4B5563]">
@@ -239,10 +243,10 @@ export default function OfficerBoardPage() {
           </div>
 
           <div className="flex flex-col items-center justify-center gap-3">
-            <p className="flex items-center gap-2 font-[family-name:var(--font-script)] text-2xl font-bold text-[#6D28D9] md:text-3xl">
-              <Heart className="size-4 shrink-0 fill-pink-400 text-pink-400" aria-hidden="true" />
+            <p className="flex items-center gap-2 font-[family-name:var(--font-script)] text-3xl font-bold text-[#6D28D9]">
+              <Heart className="size-5 shrink-0 fill-pink-400 text-pink-400" aria-hidden="true" />
               Melayani dengan Hati
-              <Heart className="size-4 shrink-0 fill-pink-400 text-pink-400" aria-hidden="true" />
+              <Heart className="size-5 shrink-0 fill-pink-400 text-pink-400" aria-hidden="true" />
             </p>
             <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-semibold text-[#374151]">
               <div className="flex items-center gap-1.5">
@@ -264,7 +268,7 @@ export default function OfficerBoardPage() {
             </div>
           </div>
 
-          <div className="flex items-center justify-center gap-4 rounded-2xl bg-[#6D28D9] px-6 py-4 text-white">
+          <div className="flex items-center justify-center gap-4 rounded-2xl bg-[#6D28D9] px-5 py-4 text-white">
             <span className="flex size-14 shrink-0 items-center justify-center rounded-full bg-white/20">
               <Phone className="size-7" aria-hidden="true" />
             </span>
@@ -279,16 +283,18 @@ export default function OfficerBoardPage() {
       </section>
 
       <footer className="relative z-10 bg-[#6D28D9] text-white">
-        <div className="mx-auto flex max-w-[1600px] flex-col flex-wrap items-start justify-between gap-4 px-6 py-5 md:flex-row md:items-center md:px-10">
-          <div className="flex items-start gap-2 text-sm">
-            <MapPin className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
+        <div className="mx-auto flex w-full flex-col flex-wrap items-center justify-center gap-3 px-3 py-3.5 md:flex-row md:gap-6 md:px-5">
+          <div className="flex items-center gap-2 text-sm font-medium">
+            <MapPin className="size-4 shrink-0" aria-hidden="true" />
             <span>Jl. Arjuno No.88, Sawahan, Sawahan, Surabaya, Jawa Timur 60251</span>
           </div>
-          <div className="flex items-center gap-2 text-sm">
+          <span className="hidden h-4 w-px bg-white/30 md:block" aria-hidden="true" />
+          <div className="flex items-center gap-2 text-sm font-medium">
             <Instagram className="size-4 shrink-0" aria-hidden="true" />
             <span>@uptppaprovjatim</span>
           </div>
-          <div className="flex items-center gap-2 text-sm font-semibold">
+          <span className="hidden h-4 w-px bg-white/30 md:block" aria-hidden="true" />
+          <div className="flex items-center gap-2 text-sm font-bold">
             <MessageCircle className="size-4 shrink-0" aria-hidden="true" />
             <span>0895-3487-71070</span>
           </div>
